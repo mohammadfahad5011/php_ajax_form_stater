@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AJAX Form Submission</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h2>Contact Form</h2>
+    <form id="contactForm">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" /><br /><br />
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" /><br /><br />
+      <label for="message">Message:</label><br />
+      <textarea id="message" name="message"></textarea><br /><br />
+      <input type="button" value="Submit" onclick="submitForm()" />
+    </form>
+    <div id="response"></div>
+
+    <script>
+      function submitForm() {
+        // Capture form data
+        var formData = {
+          name: $("#name").val(),
+          email: $("#email").val(),
+          message: $("#message").val(),
+        };
+
+        // Send data to the PHP file using AJAX
+        $.ajax({
+          type: "POST",
+          url: "process_form.php",
+          data: formData,
+          dataType: "json",
+          success: function (response) {
+            $("#response").html("<p>" + response.message + "</p>");
+          },
+          error: function (xhr, status, error) {
+            $("#response").html("<p>An error occurred: " + error + "</p>");
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
